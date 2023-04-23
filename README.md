@@ -55,7 +55,7 @@
 
 Чтобы запустить проект, выполните следующие действия:<br>
 
-1. [Скачайте](https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git) проект из репозитория на GitHub.
+1. [Скачайте](https://github.com/mustGamedev/taskwizard.git) проект из репозитория на GitHub.
 2. Загрузите и установите [Java 11](https://www.java.com/en/download/).
 3. Установите [Maven](https://maven.apache.org/download.cgi).
 4. Установите [MySQL](https://dev.mysql.com/downloads/installer/).
@@ -126,7 +126,7 @@ layers.
 
 To run the project, follow these steps:
 
-1. [Download](https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git) the project from GitHub repository.
+1. [Download](https://github.com/mustGamedev/taskwizard.git) the project from GitHub repository.
 2. Download and install [Java 11](https://www.java.com/en/download/).
 3. Install [Maven](https://maven.apache.org/download.cgi).
 4. Install [MySQL](https://dev.mysql.com/downloads/installer/).
