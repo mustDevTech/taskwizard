@@ -1,4 +1,5 @@
 # TaskWizard - todo web app
+<img src="https://github.com/mustGamedev/taskwizard/blob/master/screenshots/MainPageImage.png" width="480" height="270" />
 
 <details open>
 <summary>Описание 📔</summary>
