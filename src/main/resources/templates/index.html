@@ -1,0 +1,62 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Task Wizard</title>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Styles-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="css/style.css" rel="stylesheet">
+    <!--Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-piZTvSAvPen0Wckr0+hSoGSfLr5X5vCE8WgCFsi4E3+y4fsmGJZvsDJnSCBlhefe" crossorigin="anonymous"></script>
+</head>
+<body>
+<header>
+    <div class="header-container">
+        <img class="hc-pic mx-auto" src="images/headLogo.png" alt="">
+        <h2 class="hc-title">TaskWizard</h2>
+    </div>
+</header>
+<div class="row d-flex justify-content-center align-items-center">
+    <div class="col-12 col-md-6">
+        <div class="card" style="border-radius: 20px;">
+            <div class="card-body">
+                <form name="myForm" action="/add" onsubmit="return validateForm()" method="post">
+                    <div class="input-group mb-3">
+                        <input type="text" name="task_description" class="form-control" placeholder="Add task..." aria-label="Add task" aria-describedby="button-addon2">
+                        <button type="submit" class="btn btn-outline-secondary" id="button-addon2">Add</button>
+                    </div>
+                </form>
+                <ul class="list-group border">
+                    <li th:each="task : ${tasks}" class="list-group-item d-flex justify-content-between align-items-center border-0 mb-2">
+                        <form th:action="@{/update/{id} (id=${task.id})}" method="post">
+                            <div class="form-check">
+                                <div class="d-flex">
+                                    <div class="form-switch form-check ms-2">
+                                        <input type="checkbox" class="form-check-input" id="checkbox-[${task.id}]" th:checked="${task.completed}" onchange="this.form.submit()">
+                                        <input type="hidden" name="completed" th:value="${!task.completed}">
+                                        <label for="checkbox-[${task.id}]" class="form-check-label"></label>
+                                    </div>
+                                    <div class="task-description">
+                                        <span th:text="${task.description}" th:class="${task.completed}?'text-muted me-2 task-completed':'me-2 task-active'"></span>
+                                        <i class="bi bi-check2-circle text-success" th:if="${task.completed}"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <form th:action="@{/delete/{id}(id=${task.id})}" method="post">
+                            <button type="submit" class="btn btn-dark">X</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<footer><p>© 2023 Simple Todo web app</p></footer>
+<!--Scripts-->
+<script defer src="scripts/jquery-3.6.4.min.js"></script>
+<script defer src="scripts/string-validator.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+.header-container {
+  margin-bottom: 20px;
+}
+
+.hc-pic {
+  width: 12%;
+  height: auto;
+  margin-top: 30px;
+}
+
+.hc-title {
+  font-size: 3vw;
+  color: white;
+  font-family: fantasy;
+  text-shadow: 3px 3px #a16500;
+}
+
+.hc-advice {
+  color: wheat;
+}
+
+body {
+  text-align: center;
+  background-color: #030631;
+  background-image: linear-gradient(#180e3e, #1c2d61, #180e3e);
+  min-height: 100vh;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  color: #fff;
+}
+
+.card-body, .row {
+  margin: 0;
+  padding: 0 25px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.form-check {
+    display: block;
+    min-height: 1.5rem;
+    padding-left: 1em;
+    margin-bottom: 0rem;
+}
+
+.form-check-input:checked {
+    background-color: #4662d7;
+    border-color: #000000;
+}
+
+.form-check-input {
+    background-color: #a7a7a7;
+    border: 1px solid rgb(0 0 0);
+}
+
+.input-group {
+  margin-bottom: 1rem;
+}
+
+.list-group-item {
+  background-color: #e2e2e2;
+}
+
+.task-completed {
+  text-decoration: line-through;
+  text-decoration-color: red;
+}
+
+.task-active {
+  color: black;
+}
+
+footer {
+  font-size: 14px;
+  color: #bdbdbd;
+  padding: 5px;
+}
