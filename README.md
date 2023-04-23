@@ -69,7 +69,7 @@
 9. Запустите проект командой "mvn spring-boot:run".
 
 ## Лицензия 📜
-Этот проект доступен под лицензией MIT, дополнительную информацию вы можете найти в файле [LICENSE](https://github.com/mustGamedev/TicTacToeConsole/blob/master/LICENSE). 😊
+Этот проект доступен под лицензией MIT, дополнительную информацию вы можете найти в файле [LICENSE](https://github.com/mustGamedev/taskwizard/blob/master/LICENSE). 😊
 
 </details>
 <br>
@@ -140,5 +140,5 @@ To run the project, follow these steps:
 9. Run the project with the command "mvn spring-boot:run".
 
 ## License 📜
-This project is available under the MIT license. For more information, refer to the [LICENSE](https://github.com/mustGamedev/TicTacToeConsole/blob/master/LICENSE) file. 😊
+This project is available under the MIT license. For more information, refer to the [LICENSE](https://github.com/mustGamedev/taskwizard/blob/master/LICENSE) file. 😊
 </details>
