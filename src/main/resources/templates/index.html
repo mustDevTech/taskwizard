@@ -34,13 +34,13 @@
                             <div class="form-check">
                                 <div class="d-flex">
                                     <div class="form-switch form-check ms-2">
-                                        <input type="checkbox" class="form-check-input" id="checkbox-[${task.id}]" th:checked="${task.completed}" onchange="this.form.submit()">
-                                        <input type="hidden" name="completed" th:value="${!task.completed}">
+                                        <input type="checkbox" class="form-check-input" id="checkbox-[${task.id}]" th:checked="${task.isCompleted}" onchange="this.form.submit()">
+                                        <input type="hidden" name="completed" th:value="${!task.isCompleted}">
                                         <label for="checkbox-[${task.id}]" class="form-check-label"></label>
                                     </div>
                                     <div class="task-description">
-                                        <span th:text="${task.description}" th:class="${task.completed}?'text-muted me-2 task-completed':'me-2 task-active'"></span>
-                                        <i class="bi bi-check2-circle text-success" th:if="${task.completed}"></i>
+                                        <span th:text="${task.description}" th:class="${task.isCompleted}?'text-muted me-2 task-completed':'me-2 task-active'"></span>
+                                        <i class="bi bi-check2-circle text-success" th:if="${task.isCompleted}"></i>
                                     </div>
                                 </div>
                             </div>
