@@ -12,7 +12,9 @@ import lombok.Setter;
 
 import java.util.Objects;
 
-
+/**
+ * Entity class that represents Task.
+ */
 @Entity
 @Getter
 @Setter
@@ -28,7 +30,7 @@ public class TaskEntity {
     private String description;
 
     @Column(name = "status")
-    private boolean isCompleted;
+    private Boolean isCompleted;
 
     public TaskEntity(String description) {
         this.description = description;
