@@ -36,9 +36,6 @@
 | **Хранение данных** | `TaskRepository` | Взаимодействует с базой данных и предоставляет методы для работы с данными.                                                                  |
 | **Хранение данных** | `TaskEntity`     | Представляет собой отдельную сущность, которая будет храниться в базе данных в виде таблицы. Содержит атрибуты и методы работы с данными.    |
 
-**Для работы с базой данных:** Dto не планируется использовать, так как в проекте не требуется конвертация данных между
-слоями.
-
 ## Используемые технологии
 
 - Java 11
@@ -106,9 +103,6 @@ TaskWizard is a simple web app for managing your tasks created with Java program
 | **Business Logic** | `TaskService`    | Contains the application's business logic. Processes requests from the controller, interacts with the repository, and returns the processing result. |
 | **Data Storage**   | `TaskRepository` | Interacts with the database and provides methods for working with data.                                                                              |
 | **Data Storage**   | `TaskEntity`     | Represents a separate entity that will be stored in the database as a table. Contains attributes and methods for working with data.                  |
-
-**To work with the database:** Dto is not planned to be used, since the project does not require data conversion between
-layers.
 
 ## Technologies Used
 
