@@ -25,6 +25,11 @@ import java.util.Optional;
 public class TaskController {
     private final TaskService service;
 
+    /**
+     * Represents tasks page and showing all tasks to user.
+     * @param model the model to be passed to the view.
+     * @return tasks page.
+     */
     @GetMapping("/")
     public String tasksPage(Map<String, Object> model) {
         final List<TaskDto> tasks = service.getAllTasks();
@@ -32,6 +37,12 @@ public class TaskController {
         return "index";
     }
 
+    /**
+     * Adds new task to html page and saves it to database.
+     * @param task_description the description of task.
+     * @param model            the model to be passed to the view.
+     * @return redirect to tasks page and refreshes it.
+     */
     @PostMapping("/add")
     public String addTask(@RequestParam String task_description, Map<String, Object> model) {
         final TaskDto taskDto = new TaskDto(task_description);
@@ -40,6 +51,12 @@ public class TaskController {
         return "redirect:/";
     }
 
+
+    /**
+     * Deletes task from database by its id.
+     * @param taskId the id of the task.
+     * @return redirect to tasks page and refreshes it.
+     */
     @PostMapping("/delete/{id}")
     public String deleteTask(@PathVariable("id") Long taskId) {
         service.deleteTaskById(taskId);
@@ -47,6 +64,12 @@ public class TaskController {
         return "redirect:/";
     }
 
+    /**
+     * Updates task status in database by its id.
+     * @param taskId    the id of the task.
+     * @param completed the status of the task. 1 - completed, 0 - not completed.
+     * @return redirect to tasks page and refreshes it.s
+     */
     @PostMapping("/update/{id}")
     public String updateTaskStatus(@PathVariable("id") Long taskId, @RequestParam Boolean completed) {
         final Optional<TaskDto> task = service.findTaskById(taskId);
