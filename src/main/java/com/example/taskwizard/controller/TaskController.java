@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * Controller for {@link TaskEntity}
@@ -46,8 +45,12 @@ public class TaskController {
     @PostMapping("/add")
     public String addTask(@RequestParam String task_description, Map<String, Object> model) {
         final TaskDto taskDto = new TaskDto(task_description);
-        service.saveTask(taskDto);
-        log.log(Level.INFO, "Saved task description: {}", taskDto.getDescription());
+        if (task_description == null || task_description.isBlank()) {
+            log.log(Level.WARN, "Task description cannot be empty!");
+        } else {
+            service.saveTask(taskDto);
+            log.log(Level.INFO, "Saved task description: {}", taskDto.getDescription());
+        }
         return "redirect:/";
     }
 
@@ -60,7 +63,7 @@ public class TaskController {
     @PostMapping("/delete/{id}")
     public String deleteTask(@PathVariable("id") Long taskId) {
         service.deleteTaskById(taskId);
-        log.log(Level.INFO, "Deleted task with id: {}", taskId);
+        log.log(Level.INFO, "Deleted taskID: {}", taskId);
         return "redirect:/";
     }
 
@@ -72,14 +75,13 @@ public class TaskController {
      */
     @PostMapping("/update/{id}")
     public String updateTaskStatus(@PathVariable("id") Long taskId, @RequestParam Boolean completed) {
-        final Optional<TaskDto> task = service.findTaskById(taskId);
-        if (task.isPresent()) {
-            final TaskDto updatedTask = task.get();
-            updatedTask.setIsCompleted(completed);
-            service.saveTask(updatedTask);
-            log.log(Level.INFO, "Updated taskID: {}, completed: {}", updatedTask.getId(), updatedTask.getIsCompleted());
+        final TaskDto task = service.findTaskById(taskId);
+        if (task == null) {
+            log.log(Level.WARN, "TaskID: {} not found", taskId);
         } else {
-            log.log(Level.WARN, "Task with id: {} not found", taskId);
+            task.setIsCompleted(completed);
+            service.saveTask(task);
+            log.log(Level.INFO, "Updated taskID: {}, completed: {}", task.getId(), task.getIsCompleted());
         }
         return "redirect:/";
     }
