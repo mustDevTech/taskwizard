@@ -5,6 +5,8 @@ import com.example.taskwizard.entity.TaskEntity;
 import com.example.taskwizard.mapper.TaskMapper;
 import com.example.taskwizard.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.apache.logging.log4j.Level;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,21 +19,30 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class TaskServiceImpl implements TaskService {
     private final TaskMapper mapper;
     private final TaskRepository repository;
 
+    /**
+     * Saves a task.
+     * @param taskDto the TaskDto object representing the task to be saved
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void saveTask(TaskDto taskDto) {
         final TaskEntity entity = mapper.toEntity(taskDto);
-        if (entity.getDescription() != null && !entity.getDescription().isEmpty()) {
-            repository.save(entity);
+        if (entity.getDescription() == null || entity.getDescription().isEmpty()) {
+            log.log(Level.WARN, "Task description cannot be empty!");
         } else {
-            throw new IllegalArgumentException("Description can't be empty");
+            repository.save(entity);
         }
     }
 
+    /**
+     * Retrieves all tasks.
+     * @return a list of tasks as TaskDto objects
+     */
     @Override
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<TaskDto> getAllTasks() {
@@ -41,18 +52,34 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Deletes a task by its identifier.
+     * @param id the identifier of the task to be deleted
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteTaskById(Long id) {
         if (repository.existsById(id)) {
             repository.deleteById(id);
+        } else {
+            log.log(Level.WARN, "Task with id: {} not found", id);
         }
     }
 
+    /**
+     * Finds a task by its identifier.
+     * @param id the identifier of the task
+     * @return an Optional object containing the TaskDto representing the found task, or an empty Optional if the task is not found
+     */
     @Override
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public Optional<TaskDto> findTaskById(Long id) {
-        Optional<TaskEntity> taskEntity = repository.findById(id);
-        return taskEntity.map(mapper::toDto);
+    public TaskDto findTaskById(Long id) {
+        final Optional<TaskEntity> taskEntity = repository.findById(id);
+        if (taskEntity.isPresent()) {
+            return mapper.toDto(taskEntity.get());
+        } else {
+            log.log(Level.WARN, "Task with id: {} not found", id);
+            return null;
+        }
     }
 }
