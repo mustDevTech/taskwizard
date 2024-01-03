@@ -2,14 +2,13 @@ package com.example.taskwizard.dto;
 
 import com.example.taskwizard.entity.TaskEntity;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Dto of entity {@link TaskEntity}
@@ -17,8 +16,6 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TaskDto implements Serializable {
     Long id;
@@ -29,4 +26,32 @@ public class TaskDto implements Serializable {
         this.description = description;
         this.isCompleted = false;
     }
+
+    //region toString, equals, hashCode
+    @Override
+    public String toString() {
+        return "TaskDto{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", isCompleted=" + isCompleted +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        TaskDto taskDto = (TaskDto) o;
+        return Objects.equals(id, taskDto.id) && Objects.equals(description, taskDto.description) && Objects.equals(isCompleted, taskDto.isCompleted);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, description, isCompleted);
+    }
+    //endregion
 }
