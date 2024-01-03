@@ -1,0 +1,18 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.transaction.jta.platform: org.hibernate.engine.transaction.internal.jdbc.JdbcTransactionFactory
+    open-in-view: off
+    show-sql: false
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/mst_db
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  output:
+    ansi:
+      enabled: always
+server:
+  port: 8080
