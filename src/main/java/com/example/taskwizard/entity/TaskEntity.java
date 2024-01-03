@@ -6,6 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,9 +28,11 @@ public class TaskEntity {
     @Column(name = "id")
     private Long id;
 
+    @NotBlank(message = "Description cannot be empty!")
     @Column(name = "description")
     private String description;
 
+    @NotNull(message = "Status cannot be null!")
     @Column(name = "status")
     private Boolean isCompleted;
 
