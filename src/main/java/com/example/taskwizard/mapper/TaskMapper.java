@@ -3,6 +3,7 @@ package com.example.taskwizard.mapper;
 import com.example.taskwizard.dto.TaskDto;
 import com.example.taskwizard.entity.TaskEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for {@link TaskEntity}
@@ -14,6 +15,7 @@ public interface TaskMapper {
      * @param entity {@link TaskEntity}
      * @return {@link TaskDto}
      */
+    @Mapping(source = "entity.description", target = "description")
     TaskDto toDto(TaskEntity entity);
 
     /**
@@ -21,5 +23,6 @@ public interface TaskMapper {
      * @param dto {@link TaskDto}
      * @return {@link TaskEntity}
      */
+    @Mapping(source = "dto.description", target = "description")
     TaskEntity toEntity(TaskDto dto);
 }
