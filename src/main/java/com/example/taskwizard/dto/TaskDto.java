@@ -23,6 +23,7 @@ public class TaskDto implements Serializable {
     Boolean isCompleted;
 
     public TaskDto(String description) {
+        this.id = null;
         this.description = description;
         this.isCompleted = false;
     }
