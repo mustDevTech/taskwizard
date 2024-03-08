@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.Level;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -22,6 +19,7 @@ import java.util.Map;
 @Log4j2
 @RequiredArgsConstructor
 public class TaskController {
+    private static final String REDIRECT = "redirect:/";
     private final TaskService service;
 
     /**
@@ -38,20 +36,20 @@ public class TaskController {
 
     /**
      * Adds new task to html page and saves it to database.
-     * @param task_description the description of task.
-     * @param model            the model to be passed to the view.
+     * @param description the description of task.
+     * @param model       the model to be passed to the view.
      * @return redirect to tasks page and refreshes it.
      */
     @PostMapping("/add")
-    public String addTask(@RequestParam String task_description, Map<String, Object> model) {
-        final TaskDto taskDto = new TaskDto(task_description);
-        if (task_description == null || task_description.isBlank()) {
+    public String addTask(@RequestParam("task_description") String description, Map<String, Object> model) {
+        final TaskDto taskDto = new TaskDto(description);
+        if (description == null || description.isBlank()) {
             log.log(Level.WARN, "Task description cannot be empty!");
         } else {
             service.saveTask(taskDto);
             log.log(Level.INFO, "Saved task description: {}", taskDto.getDescription());
         }
-        return "redirect:/";
+        return REDIRECT;
     }
 
 
@@ -60,11 +58,11 @@ public class TaskController {
      * @param taskId the id of the task.
      * @return redirect to tasks page and refreshes it.
      */
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String deleteTask(@PathVariable("id") Long taskId) {
         service.deleteTaskById(taskId);
         log.log(Level.INFO, "Deleted taskID: {}", taskId);
-        return "redirect:/";
+        return REDIRECT;
     }
 
     /**
@@ -73,16 +71,15 @@ public class TaskController {
      * @param completed the status of the task. 1 - completed, 0 - not completed.
      * @return redirect to tasks page and refreshes it.s
      */
-    @PostMapping("/update/{id}")
+    @PatchMapping("/update/{id}")
     public String updateTaskStatus(@PathVariable("id") Long taskId, @RequestParam Boolean completed) {
         final TaskDto task = service.findTaskById(taskId);
         if (task == null) {
             log.log(Level.WARN, "TaskID: {} not found", taskId);
         } else {
-            task.setIsCompleted(completed);
-            service.saveTask(task);
+            service.updateTaskStatusById(taskId, completed);
             log.log(Level.INFO, "Updated taskID: {}, completed: {}", task.getId(), task.getIsCompleted());
         }
-        return "redirect:/";
+        return REDIRECT;
     }
 }
