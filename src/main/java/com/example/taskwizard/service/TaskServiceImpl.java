@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Represents {@link TaskService}
@@ -47,9 +46,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<TaskDto> getAllTasks() {
         final List<TaskEntity> taskEntities = (List<TaskEntity>) repository.findAll();
-        return taskEntities.stream()
-                .map(mapper::toDto)
-                .collect(Collectors.toList());
+        return taskEntities.stream().map(mapper::toDto).toList();
     }
 
     /**
@@ -59,7 +56,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteTaskById(Long id) {
-        if (repository.existsById(id)) {
+        if (repository.findById(id).isPresent()) {
             repository.deleteById(id);
         } else {
             log.log(Level.WARN, "Task with id: {} not found", id);
@@ -75,11 +72,20 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public TaskDto findTaskById(Long id) {
         final Optional<TaskEntity> taskEntity = repository.findById(id);
-        if (taskEntity.isPresent()) {
-            return mapper.toDto(taskEntity.get());
-        } else {
+        return taskEntity.map(mapper::toDto).orElseThrow(() -> {
             log.log(Level.WARN, "Task with id: {} not found", id);
             return null;
-        }
+        });
+    }
+
+    /**
+     * Updates the status of a task.
+     * @param taskId    the id of the task.
+     * @param completed the new status of the task.
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateTaskStatusById(Long taskId, Boolean completed) {
+        repository.updateTaskStatus(taskId, completed);
     }
 }
