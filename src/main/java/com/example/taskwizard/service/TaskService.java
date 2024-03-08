@@ -4,7 +4,6 @@ import com.example.taskwizard.dto.TaskDto;
 import com.example.taskwizard.entity.TaskEntity;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Service for {@link TaskEntity}
@@ -14,4 +13,5 @@ public interface TaskService {
     List<TaskDto> getAllTasks();
     void deleteTaskById(Long id);
     TaskDto findTaskById(Long id);
+    void updateTaskStatusById(Long taskId, Boolean completed);
 }
