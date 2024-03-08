@@ -4,8 +4,11 @@ spring:
       ddl-auto: update
     properties:
       hibernate.transaction.jta.platform: org.hibernate.engine.transaction.internal.jdbc.JdbcTransactionFactory
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+        show_sql: false
     open-in-view: off
-    show-sql: false
   datasource:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/mst_db
     username: root
@@ -14,5 +17,9 @@ spring:
   output:
     ansi:
       enabled: always
+  mvc:
+    hidden method:
+      filter:
+        enabled: true
 server:
   port: 8080
