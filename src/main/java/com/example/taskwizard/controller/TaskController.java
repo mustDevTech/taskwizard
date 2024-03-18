@@ -47,7 +47,7 @@ public class TaskController {
             log.log(Level.WARN, "Task description cannot be empty!");
         } else {
             service.saveTask(taskDto);
-            log.log(Level.INFO, "Saved task description: {}", taskDto.getDescription());
+            log.log(Level.INFO, "Saved task description: {}", taskDto.description());
         }
         return REDIRECT;
     }
@@ -73,13 +73,8 @@ public class TaskController {
      */
     @PatchMapping("/update/{id}")
     public String updateTaskStatus(@PathVariable("id") Long taskId, @RequestParam Boolean completed) {
-        final TaskDto task = service.findTaskById(taskId);
-        if (task == null) {
-            log.log(Level.WARN, "TaskID: {} not found", taskId);
-        } else {
-            service.updateTaskStatusById(taskId, completed);
-            log.log(Level.INFO, "Updated taskID: {}, completed: {}", task.getId(), task.getIsCompleted());
-        }
+        service.updateTaskStatusById(taskId, completed);
+        log.log(Level.INFO, "Updated taskID: {}, completed: {}", taskId, completed);
         return REDIRECT;
     }
 }
