@@ -20,6 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Log4j2
 public class TaskServiceImpl implements TaskService {
+    private static final String ERROR_MESSAGE = "Task with id: {} not found";
     private final TaskMapper mapper;
     private final TaskRepository repository;
 
@@ -56,11 +57,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteTaskById(Long id) {
-        if (repository.findById(id).isPresent()) {
-            repository.deleteById(id);
-        } else {
-            log.log(Level.WARN, "Task with id: {} not found", id);
-        }
+        repository.deleteById(id);
     }
 
     /**
@@ -73,7 +70,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskDto findTaskById(Long id) {
         final Optional<TaskEntity> taskEntity = repository.findById(id);
         return taskEntity.map(mapper::toDto).orElseThrow(() -> {
-            log.log(Level.WARN, "Task with id: {} not found", id);
+            log.log(Level.WARN, ERROR_MESSAGE, id);
             return null;
         });
     }
@@ -86,6 +83,9 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateTaskStatusById(Long taskId, Boolean completed) {
-        repository.updateTaskStatus(taskId, completed);
+        repository.findById(taskId).ifPresentOrElse(
+                task -> repository.updateTaskStatus(taskId, completed),
+                () -> log.log(Level.WARN, ERROR_MESSAGE, taskId)
+        );
     }
 }
